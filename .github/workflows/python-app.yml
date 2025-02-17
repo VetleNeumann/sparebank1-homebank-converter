@@ -1,0 +1,43 @@
+name: Python application
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.13
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.13"
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Lint with flake8
+      run: |
+        flake8 . --count --exit-zero --statistics
+
+    # 4. Run isort (in check-only mode)
+    - name: Check import sorting (isort)
+      run: isort --check-only --diff my_app tests
+
+    # 5. Run mypy
+    - name: Static type checking (mypy)
+      run: mypy sparebank1_homebank.py test_sparebank1_homebank.py
+
+    # 6. Run unittests
+    - name: Run unittests
+      run: python -m unittest discover
