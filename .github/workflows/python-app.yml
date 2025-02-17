@@ -32,7 +32,7 @@ jobs:
 
     # 4. Run isort (in check-only mode)
     - name: Check import sorting (isort)
-      run: isort --check-only --diff my_app tests
+      run: isort --check-only --diff sparebank1_homebank.py test_sparebank1_homebank.py
 
     # 5. Run mypy
     - name: Static type checking (mypy)
