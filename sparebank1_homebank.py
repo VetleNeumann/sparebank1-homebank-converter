@@ -61,7 +61,9 @@ def generate_homebank_csv(sparebank1_csv_path: pathlib.Path) -> None:
     with sparebank1_csv_path.open(encoding="UTF-8") as file:
         transaction_entries: list[Sparebank1Entry] = parse_sparebank1_csv(file)
 
-    destination = pathlib.Path(f"{sparebank1_csv_path.parent}/{sparebank1_csv_path.stem}_homebank.csv")
+    destination = pathlib.Path(
+        f"{sparebank1_csv_path.parent}/{sparebank1_csv_path.stem}_homebank.csv"
+    )
     with destination.open("w", newline="", encoding="UTF-8") as file:
         csv_writer = csv.writer(file, delimiter=";")
         for transaction in transaction_entries:
